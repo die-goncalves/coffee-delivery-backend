@@ -19,8 +19,11 @@
 O propósito para a construção deste backend é fornecer os serviços necessários para que o front end da aplicação Coffee Delivery funcione corretamente. Nele estabelecemos rotas para gerenciar os dados do estabelecimento, dos cafés, dos pedidos e da autenticação de usuários.
 
 Os dados do estabelecimento e dos cafés foram armazenados no banco de dados utilizando o `prisma studio`.
+
 A autenticação de usuários segue a estratégia de refresh token, ao realizar o cadastro de um usuário são armazenados no banco o email, senha e um refresh token que é um token com expiração de longa duração, além disso também é gerado um access token que é um token de curta duração e fornecido à parte frontend da aplicação, com esses dois tokens realizamos a autenticação do usuário sem precisar informar email e senha a todo momento.
-Os pedidos só podem ser feitos e visualizados por usuários autenticados e por isso middlewares de autenticação foram adicionados em rotas específicas.   
+
+Os pedidos só podem ser feitos e visualizados por usuários autenticados e por isso middlewares de autenticação foram adicionados em rotas específicas.
+
 Na aplicação também foi construído um sistema centralizado para tratamento de erros.
 
 ## Tecnologias
