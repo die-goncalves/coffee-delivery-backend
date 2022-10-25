@@ -33,7 +33,7 @@ Na aplicação também foi construído um sistema centralizado para tratamento d
 - [Prisma](https://www.prisma.io/)
 - [Json Web Tokens](https://jwt.io/)
 
-> Veja o arquivo  [package.json](packages/package.json)
+> Veja o arquivo  [package.json](package.json)
 
 ## Instalação
 
