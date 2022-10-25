@@ -16,7 +16,7 @@
 ## Sobre
 <h4>Backend da aplicação Coffee Delivery</h4>
 
-O propósito para a construção deste backend é fornecer os serviços necessários para que o front end da aplicação Coffee Delivery funcione corretamente. Nele estabelecemos rotas para gerenciar os dados do estabelecimento, dos cafés, dos pedidos e da autenticação de usuários.
+O propósito para a construção deste backend é fornecer os serviços necessários para que o [frontend da aplicação Coffee Delivery](https://github.com/die-goncalves/coffee-delivery.git) funcione corretamente. Nele estabelecemos rotas para gerenciar os dados do estabelecimento, dos cafés, dos pedidos e da autenticação de usuários.
 
 Os dados do estabelecimento e dos cafés foram armazenados no banco de dados utilizando o `prisma studio`.
 
