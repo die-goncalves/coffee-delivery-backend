@@ -1,0 +1,198 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Inventory {
+  id       String @id @default(uuid())
+  quantity Int
+
+  coffee   Coffee @relation(fields: [coffeeId], references: [id])
+  coffeeId String @unique
+
+  store   Store?  @relation(fields: [storeId], references: [id])
+  storeId String?
+
+  updatedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  @@map("inventories")
+}
+
+model Tag {
+  id   String @id @default(uuid())
+  name String
+
+  coffeesOnTags CoffeesOnTags[]
+
+  updatedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  @@map("tags")
+}
+
+model CoffeesOnTags {
+  coffee     Coffee   @relation(fields: [coffeeId], references: [id])
+  coffeeId   String // relation scalar field (used in the `@relation` attribute above)
+  tag        Tag      @relation(fields: [tagId], references: [id])
+  tagId      String // relation scalar field (used in the `@relation` attribute above)
+  assignedAt DateTime @default(now())
+
+  @@id([coffeeId, tagId])
+  @@map("coffeesOnTags")
+}
+
+model Coffee {
+  id          String @id @default(uuid())
+  image       String
+  name        String
+  description String
+  price       Float
+
+  inventory   Inventory?
+  orderCoffee OrderCoffee[]
+
+  coffeesOnTags CoffeesOnTags[]
+
+  store   Store  @relation(fields: [storeId], references: [id])
+  storeId String
+
+  updatedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  @@map("coffees")
+}
+
+model LngLat {
+  id  String @id @default(uuid())
+  lng Float
+  lat Float
+
+  store   Store  @relation(fields: [storeId], references: [id])
+  storeId String @unique
+
+  updatedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  @@map("lngLat")
+}
+
+model Store {
+  id   String @id @default(uuid())
+  name String
+
+  lngLat LngLat?
+
+  coffees   Coffee[]
+  order     Order[]
+  inventory Inventory[]
+
+  updatedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  @@map("stores")
+}
+
+//====================== CUSTOMER ======================//
+model Customer {
+  id String @id @default(uuid())
+
+  email    String @unique
+  password String
+
+  orders Order[]
+
+  RefreshToken RefreshToken?
+
+  @@map("customers")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  expiresIn DateTime
+
+  customer   Customer @relation(fields: [customerId], references: [id])
+  customerId String   @unique
+
+  @@map("refresh_token")
+}
+
+//====================== ORDER ======================//
+model Order {
+  id String @id @default(uuid())
+
+  point       Point?
+  payment     Payment?
+  orderCoffee OrderCoffee[]
+
+  customer   Customer? @relation(fields: [customerId], references: [id])
+  customerId String?
+
+  store   Store?  @relation(fields: [storeId], references: [id])
+  storeId String?
+
+  updatedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  @@map("orders")
+}
+
+model Point {
+  id String @id @default(uuid())
+
+  lat Float
+  lng Float
+
+  features PointFeatures?
+
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String @unique
+
+  @@map("points")
+}
+
+model PointFeatures {
+  city         String
+  complement   String
+  neighborhood String
+  number       Int
+  postalCode   String
+  state        String
+  street       String
+
+  point   Point  @relation(fields: [pointId], references: [id])
+  pointId String @unique
+
+  @@map("pointFeatures")
+}
+
+model OrderCoffee {
+  id String @id @default(uuid())
+
+  quantity Int
+
+  coffee   Coffee @relation(fields: [coffeeId], references: [id])
+  coffeeId String
+
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String
+
+  @@map("orderCoffee")
+}
+
+model Payment {
+  price  Int
+  method String
+
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String @unique
+
+  @@map("payments")
+}
