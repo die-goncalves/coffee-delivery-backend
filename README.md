@@ -55,8 +55,8 @@ Na aplicação também foi construído um sistema centralizado para tratamento d
    $ yarn #ou $ npm install
    ```
 
-3. Variáveis de ambiente
-  a. Crie o arquivo **.env** na raiz do projeto (Ficando no mesmo nível que o package.json) com a seguinte variável: 
+3. Variáveis de ambiente<br />
+    Crie o arquivo **.env** na raiz do projeto (Ficando no mesmo nível que o package.json) com a seguinte variável: 
     ```
     DATABASE_URL=
     ``` 
